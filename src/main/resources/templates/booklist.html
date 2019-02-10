@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+	
+	<!-- CSS files -->
+	<link rel="stylesheet" type="text/css" href="../static/css/semantic.css" th:href="@{/css/semantic.css}" />
+	
+	<title>Bookstore</title>
+</head>
+<body>
+	<div class="ui container">
+		<div class="ui hidden divider"></div>
+		<h1 class="ui header">Welcome to my Bookstore!</h1>
+		<table class="ui celled table">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Author</th>
+				<th>Year</th>
+				<th>ISBN</th>
+				<th>Price €</th>
+				<th>Delete</th>
+				<th>Edit</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="book : ${books}">
+				<td th:text="${book.title}"></td>
+				<td th:text="${book.author}"></td>
+				<td th:text="${book.year}"></td>
+				<td th:text="${book.isbn}"></td>
+				<td th:text="${book.price}"></td>
+				<td><a th:href="@{/delete/{id}(id=${book.id})}"><i class="trash alternate outline icon"></i></a></td>
+				<td><a th:href="@{/edit/{id}(id=${book.id})}"><i class="edit icon"></i></a></td> 
+			</tr>
+		</tbody>
+		</table>
+		<a class="ui button" href="/add">Add new Book</a>  
+	</div>
+	
+	<!-- JavaScript files -->
+	<script type="text/javascript" src="../static/css/semantic.js" th:src="@{/css/semantic.js}"></script>
+</body>
+</html>
