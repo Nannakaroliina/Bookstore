@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Book {
 	
@@ -19,6 +21,7 @@ public class Book {
 	private double price;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Category category;
 	
 	public Book() {
