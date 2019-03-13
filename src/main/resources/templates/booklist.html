@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 	
@@ -11,7 +11,11 @@
 <body>
 	<div class="ui container">
 		<div class="ui hidden divider"></div>
-		<h1 class="ui header">Welcome to my Bookstore!</h1>
+		<h1 class="ui header">Welcome to Bookstore!</h1>
+		<h5>Logged in as [[${#httpServletRequest.remoteUser}]]</h5>
+		<form class="ui form" th:action="@{/logout}" method="post">
+			<button class="ui button" type="submit">Sign Out</button>
+		</form>
 		<table class="ui celled table">
 		<thead>
 			<tr>
@@ -21,8 +25,8 @@
 				<th>ISBN</th>
 				<th>Price €</th>
 				<th>Category</th>
-				<th>Delete</th>
 				<th>Edit</th>
+				<th sec:authorize="hasAuthority('ADMIN')">Delete</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -33,8 +37,8 @@
 				<td th:text="${book.isbn}"></td>
 				<td th:text="${book.price}"></td>
 				<td th:text="${book.category.name}"></td>
-				<td><a th:href="@{/delete/{id}(id=${book.id})}"><i class="trash alternate outline icon"></i></a></td>
-				<td><a th:href="@{/edit/{id}(id=${book.id})}"><i class="edit icon"></i></a></td> 
+				<td><a th:href="@{/edit/{id}(id=${book.id})}"><i class="edit icon"></i></a></td>
+				<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${book.id})}"><i class="trash alternate outline icon"></i></a></td> 
 			</tr>
 		</tbody>
 		</table>

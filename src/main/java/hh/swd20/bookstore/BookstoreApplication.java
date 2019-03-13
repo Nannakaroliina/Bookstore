@@ -12,6 +12,8 @@ import hh.swd20.bookstore.domain.Book;
 import hh.swd20.bookstore.domain.BookRepository;
 import hh.swd20.bookstore.domain.Category;
 import hh.swd20.bookstore.domain.CategoryRepository;
+import hh.swd20.bookstore.domain.User;
+import hh.swd20.bookstore.domain.UserRepository;
 
 @SpringBootApplication
 public class BookstoreApplication {
@@ -23,7 +25,7 @@ public class BookstoreApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository cgrepository) {
+	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository cgrepository, UserRepository urepository) {
 		return (args) -> {
 			log.info("Save couple of categories");
 			cgrepository.save(new Category("Thriller"));
@@ -33,6 +35,12 @@ public class BookstoreApplication {
 			log.info("Save some books");
 			repository.save(new Book("How Google works", "Eric Schmidt & Jonathan Rosenberg", 2017, 12345, 10.99, cgrepository.findByName("Non-fiction").get(0)));
 			repository.save(new Book("Sweet Nothing", "Nicole Mowbray", 2014, 23456, 7.99, cgrepository.findByName("Non-fiction").get(0)));
+			
+			// Creating user and admin
+			User user1 = new User("user", "$2a$04$4huA86.ZAl/8Us37tOfDDekrFFIZfkb6ZPRixFYgy702HE9hNHQCC", "user1@bookstore.com", "USER");
+			User user2 = new User("admin", "$2a$06$2lArAqPgSxgIiVIxs4E5su0GWBnHcBxiXaZufO7vLLGroqpzklXeG", "admin@bookstore.com", "ADMIN");
+			urepository.save(user1);
+			urepository.save(user2);
 			
 			log.info("Get all books");
 			for (Book book : repository.findAll()) {

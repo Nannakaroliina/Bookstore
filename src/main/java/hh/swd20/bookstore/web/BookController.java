@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,12 @@ public class BookController {
 	
 	@Autowired
 	private CategoryRepository cgrepository;
+	
+	// Login to show all books
+	@RequestMapping(value="/login")
+	public String login() {
+		return "login";
+	}
 
 	// Show all books in book list page
 	@RequestMapping(value="/booklist")
@@ -65,6 +72,7 @@ public class BookController {
 	}
 	
 	// Delete book by ID
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
 	public String deleteBook(@PathVariable("id") Long bookId, Model model) {
 		repository.deleteById(bookId);
@@ -75,6 +83,7 @@ public class BookController {
 	@RequestMapping(value="/edit/{id}")
 	public String editBook(@PathVariable("id") Long bookId, Model model) {
 		model.addAttribute("book", repository.findById(bookId));
+		model.addAttribute("categories", cgrepository.findAll());
 		return "edit";
 	}
 	
