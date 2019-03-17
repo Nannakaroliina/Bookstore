@@ -33,6 +33,9 @@ public class BookstoreApplication {
 			cgrepository.save(new Category("Health"));
 			cgrepository.save(new Category("Biography"));
 			cgrepository.save(new Category("Romance"));
+			cgrepository.save(new Category("Fantasy"));
+			cgrepository.save(new Category("Comic"));
+			cgrepository.save(new Category("Fiction"));
 			
 			log.info("Save some books");
 			repository.save(new Book("How Google works", "Eric Schmidt & Jonathan Rosenberg", 2017, 12345, 10.99, cgrepository.findByName("Non-fiction").get(0)));
