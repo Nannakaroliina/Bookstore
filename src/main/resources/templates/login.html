@@ -9,8 +9,9 @@
     <body>
 	    <div class="ui container">
 	    	<div class="ui hidden divider"></div>
+	    	<h1 class="ui header">Login to Bookstore</h1>
 	        <div th:if="${param.error}">
-	            Invalid username and password.
+	            Invalid user name and password.
 	        </div>
 	        <div th:if="${param.logout}">
 	            You have been logged out.
@@ -20,6 +21,12 @@
 	            <div class="field"><label> Password: <input type="password" name="password"/> </label></div>
 	            <button class="ui button" type="submit">Sign in</button>
 	        </form>
+	        <div class="ui hidden divider"></div>
+	        <div>
+	        	<h5>New here?</h5>
+	        	<p>Create new user here.</p>
+	        	<a class="ui button" th:href="@{/signup}">Sign-up</a>
+	        </div>
 	    </div>
     </body>
 </html>
