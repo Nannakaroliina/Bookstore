@@ -1,5 +1,5 @@
 # Bookstore
-Server programming school project
+Server programming project
 
-This is project for my server programming course. 
+This is project is part of my server programming course. You can view it on Heroku: https://bookstorens.herokuapp.com
 
