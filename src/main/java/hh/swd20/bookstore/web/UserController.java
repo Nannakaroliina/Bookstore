@@ -23,35 +23,44 @@ public class UserController {
 	
 	@RequestMapping(value = "signup")
 	public String addUser(Model model) {
-		model.addAttribute("singupform", new SignupForm());
+		model.addAttribute("signupform", new SignupForm());
 		return "signup";
 	}
 	
 	@RequestMapping(value = "saveuser", method = RequestMethod.POST)
 	public String save(@Valid @ModelAttribute("signupform") SignupForm signupForm, BindingResult bindingResult) {
-		if (!bindingResult.hasErrors()) {
-			if (signupForm.getPassword().equals(signupForm.getPasswordCheck())) {
-				String pwd = signupForm.getPassword();
-				BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
-				String hashPwd = bc.encode(pwd);
+		
+			if (!bindingResult.hasErrors()) {
 				
-				User newUser = new User();
-				newUser.setPasswordHash(hashPwd);
-				newUser.setUsername(signupForm.getUsername());
-				newUser.setRole("USER");
-				if (repository.findByUsername(signupForm.getUsername()) == null) {
-					repository.save(newUser);
+				if (signupForm.getPassword().equals(signupForm.getPasswordCheck())) {
+					
+					String pwd = signupForm.getPassword();
+					BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+					String hashPwd = bc.encode(pwd);
+					
+					User newUser = new User();
+					newUser.setPasswordHash(hashPwd);
+					newUser.setUsername(signupForm.getUsername());
+					newUser.setEmail(signupForm.getEmail());
+					newUser.setRole("USER");
+						
+						if (repository.findByUsername(signupForm.getUsername()) == null) {
+							repository.save(newUser);
+						} else {
+							bindingResult.rejectValue("username", "err.username", "Username already exists");
+							return "signup";
+						}
+						
 				} else {
-					bindingResult.rejectValue("username", "err.username", "Username already exists");
+					bindingResult.rejectValue("passwordCheck", "err.passCheck", "Passwords does not macth");
 					return "signup";
 				}
+				
 			} else {
-				bindingResult.rejectValue("passwordCheck", "err.passCheck", "Passwords does not macth");
 				return "signup";
 			}
-		} else {
-			return "signup";
-		}
+			
 		return "redirect:/login";
+		
 	}
 }

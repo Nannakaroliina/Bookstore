@@ -9,10 +9,13 @@
 	    <div class="ui container">
 	    	<div class="ui hidden divider"></div>
 	    	<h1 class="ui header">Sign-up to Bookstore</h1>
-	        <form class="ui form" th:object="${signupForm}" th:action="@{/saveuser}" action="#" method="post">
+	        <form class="ui form" th:object="${signupform}" th:action="@{/saveuser}" action="#" method="post">
 	            <div class="field">
 	            	<label> User Name : <input type="text" th:field="*{username}"/> </label>
-	            	<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Incorrect username</p>
+	            	<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Incorrect username or it's already in use.</p>
+	            </div>
+	            <div class="field">
+	            	<label> Email: <input type="email" th:field="*{email}"/> </label>
 	            </div>
 	            <div class="field">
 	            	<label> Password: <input type="password" th:field="*{password}"/> </label>
@@ -22,6 +25,7 @@
 	            	<label> Re-type password: <input type="password" th:field="*{passwordCheck}"/> </label>
 	            	<p th:if="${#fields.hasErrors('passwordCheck')}" th:errors="*{passwordCheck}">Passwords does not match</p>
 	            </div>
+	            
 	            <button class="ui button" type="submit">Sign-up</button>
 	        </form>
 	    </div>
