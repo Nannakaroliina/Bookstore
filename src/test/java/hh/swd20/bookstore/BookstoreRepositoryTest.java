@@ -47,10 +47,9 @@ public class BookstoreRepositoryTest {
 	
 	@Test
 	public void deleteBook() {
-		List<Book> books = brepository.findByTitle("Kuolemanlaakso");
-		Book book = books.get(0);
-		books.remove(book);
-		assertThat(books).hasSize(0);
+		Book book = brepository.findById(15).get(0);
+		brepository.delete(book);
+		assertThat(brepository.findById(15)).isNull();
 	}
 	
 	@Test
